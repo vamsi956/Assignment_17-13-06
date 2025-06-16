@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie List Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #2b2b2b;
+      font-family: Arial, sans-serif;
+      color: white;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: rgb(5, 73, 9);
+      font-family: 'Permanent Marker', cursive;
+    }
+
+    .filter-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .filter-buttons button {
+      background-color: rgb(5, 73, 9);
+      border: 2px solid white;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .filter-buttons button:hover {
+      background-color: #00ffa1;
+      color: #000;
+    }
+
+    .search-box {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .search-box input {
+      width: 300px;
+      padding: 12px 20px;
+      border-radius: 50px;
+      border: none;
+      outline: none;
+      background: #1e1e1e;
+      color: white;
+      font-size: 1rem;
+      box-shadow: 0px 0px 10px white;
+    }
+
+    .movies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+
+    .movie-card {
+      background-color: #121212;
+      border-radius: 15px;
+      box-shadow: 0 0 10px white;
+      width: 200px;
+      transition: transform 0.3s;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.03);
+    }
+
+    .movie-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .movie-info {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .movie-title {
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .like {
+      font-size: 1.3rem;
+      color: green;
+      cursor: pointer;
+    }
+
+    .like.liked {
+      color: #ff0080;
+    }
+
+    .slider {
+      position: relative;
+      height: 300px;
+      margin: 50px auto;
+      max-width: 90%;
+    }
+
+    .slides {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 0 10px white;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .nav-arrows {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 20px;
+      z-index: 10;
+      color: white;
+      cursor: pointer;
+    }
+
+    .nav-arrows span {
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .faq {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    .faq h1 {
+      color: #00ffa1;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 35px;
+      margin-bottom: 30px;
+    }
+
+    .faq .container {
+      background-color: #121212;
+      width: 60%;
+      margin: 20px auto;
+      border-radius: 15px;
+      box-shadow: 0 0 10px white;
+      padding: 20px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .faq .container p {
+      color: #1df5c0;
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>MOVIE LIST</h1>
+
+  <div class="filter-buttons">
+    <button>All</button>
+    <button>MarvelMovie</button>
+    <button>FunnyMovie</button>
+    <button>AnimationMovie</button>
+    <button>WebSeriesMovie</button>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search here..." />
+  </div>
+
+  <div class="movies" id="moviesContainer">
+    <div class="movie-card" data-category="MarvelMovie">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f9/Spider-Man_Homecoming_poster.jpg" alt="Spider-Man">
+      <div class="movie-info">
+        <div class="movie-title">Spider-Man: Homecoming</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="MarvelMovie">
+      <img src="https://render.fineartamerica.com/images/rendered/default/greeting-card/images/artworkimages/medium/2/avengers-endgame-ujjwal-vats-transparent.png?&targetx=0&targety=-15&imagewidth=500&imageheight=730&modelwidth=500&modelheight=700&backgroundcolor=000000&orientation=1" alt="Avengers">
+      <div class="movie-info">
+        <div class="movie-title">Avengers: Endgame</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="MarvelMovie">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq6AwjMYHi7oAqlT2IUWGJ6xkXaAs0SeE8Sw&s" alt="Iron Man 3">
+      <div class="movie-info">
+        <div class="movie-title">Iron Man 3</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="MarvelMovie">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMh9zA_Mc94sutmXcHCqu7BkeguYu7y68KSA&s" alt="Doctor Strange">
+      <div class="movie-info">
+        <div class="movie-title">Doctor Strange</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <!-- Funny Movies -->
+    <div class="movie-card" data-category="FunnyMovie">
+      <img src="https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15854_p_v13_al.jpg" alt="The Mask">
+      <div class="movie-info">
+        <div class="movie-title">The Mask</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="FunnyMovie">
+      <img src="https://upload.wikimedia.org/wikipedia/en/7/76/Home_alone_poster.jpg" alt="Home Alone">
+      <div class="movie-info">
+        <div class="movie-title">Home Alone</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="FunnyMovie">
+      <img src="https://m.media-amazon.com/images/M/MV5BNGQxZDA1MmMtYWQ1Ni00NTJmLTljMjgtZWVmODllODVhMzgyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Dumb and Dumber">
+      <div class="movie-info">
+        <div class="movie-title">Dumb and Dumber</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="FunnyMovie">
+      <img src="https://m.media-amazon.com/images/M/MV5BNGQxZDA1MmMtYWQ1Ni00NTJmLTljMjgtZWVmODllODVhMzgyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Mr Bean">
+      <div class="movie-info">
+        <div class="movie-title">Mr. Bean's Holiday</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <!-- Animation Movies -->
+    <div class="movie-card" data-category="AnimationMovie">
+      <img src="https://lumiere-a.akamaihd.net/v1/images/p_soul_disneyplus_v2_20907_764da65d.jpeg?region=0%2C0%2C540%2C810" alt="Soul">
+      <div class="movie-info">
+        <div class="movie-title">Soul</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="AnimationMovie">
+      <img src="https://m.media-amazon.com/images/M/MV5BMjExMTg5OTU0NF5BMl5BanBnXkFtZTcwMjMxMzMzMw@@._V1_.jpg" alt="WALL-E">
+      <div class="movie-info">
+        <div class="movie-title">WALL-E</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="AnimationMovie">
+      <img src="https://upload.wikimedia.org/wikipedia/en/6/69/Toy_Story_3_poster.jpg" alt="Toy Story 3">
+      <div class="movie-info">
+        <div class="movie-title">Toy Story 3</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="AnimationMovie">
+      <img src="https://upload.wikimedia.org/wikipedia/en/0/05/Up_%282009_film%29.jpg" alt="Up">
+      <div class="movie-info">
+        <div class="movie-title">Up</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <!-- Web Series Movies -->
+    <div class="movie-card" data-category="WebSeriesMovie">
+      <img src="https://m.media-amazon.com/images/M/MV5BMjg2NmM0MTEtYWY2Yy00NmFlLTllNTMtMjVkZjEwMGVlNzdjXkEyXkFqcGc@._V1_.jpg" alt="Stranger Things">
+      <div class="movie-info">
+        <div class="movie-title">Stranger Things</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="WebSeriesMovie">
+      <img src="https://upload.wikimedia.org/wikipedia/en/d/da/DarkNetflixPosterEnglish.jpg" alt="Dark">
+      <div class="movie-info">
+        <div class="movie-title">Dark</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="WebSeriesMovie">
+      <img src="https://m.media-amazon.com/images/M/MV5BMzU5ZGYzNmQtMTdhYy00OGRiLTg0NmQtYjVjNzliZTg1ZGE4XkEyXkFqcGc@._V1_.jpg" alt="Breaking Bad">
+      <div class="movie-info">
+        <div class="movie-title">Breaking Bad</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+    <div class="movie-card" data-category="WebSeriesMovie">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fd/Tommy_Shelby.jpg/250px-Tommy_Shelby.jpg" alt="Peaky Blinders">
+      <div class="movie-info">
+        <div class="movie-title">Peaky Blinders</div>
+        <div class="like">♡</div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- SLIDER -->
+  <div class="slider">
+    <div class="slides">
+      <img src="https://www.shutterstock.com/image-vector/caramel-popcorn-banner-ads-flying-260nw-1221242224.jpg" class="slide active" />
+      <img src="https://alamocitypopcorn.com/cdn/shop/articles/8_Best_Popcorn_Flavors.png?v=1686564927" class="slide" />
+      <img src="https://qph.cf2.quoracdn.net/main-qimg-d857737eec9b31708cae7712acbcbb27-pjlq" class="slide" />
+    </div>
+    <div class="nav-arrows">
+      <span id="prev">&#10094;</span>
+      <span id="next">&#10095;</span>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq">
+    <h1>Frequently asked questions</h1>
+    <div class="container">
+      <h2 class="box">1. What is this website about?</h2>
+      <p>This website provides in-depth reviews, ratings, and analysis of movies from different genres, release periods, and countries.</p>
+    </div>
+    <div class="container">
+      <h2 class="box">2. How are movies rated?</h2>
+      <p>Movies are rated based on the story, plot, and direction.</p>
+    </div>
+    <div class="container">
+      <h2 class="box">3. Can I submit my own reviews?</h2>
+      <p>Yes, you can submit your own reviews.</p>
+    </div>
+    <div class="container">
+      <h2 class="box">4. Is the content on this website free?</h2>
+      <p>Yes, the content on the website is free for everyone.</p>
+    </div>
+  </div>
+
+  <script>
+    // Like toggle
+    document.querySelectorAll('.like').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('liked');
+        btn.textContent = btn.classList.contains('liked') ? '❤️' : '♡';
+      });
+    });
+
+    // Filter buttons
+    document.querySelectorAll(".filter-buttons button").forEach(button => {
+      button.addEventListener("click", () => {
+        const category = button.textContent;
+        document.querySelectorAll(".movie-card").forEach(card => {
+          if (category === "All" || card.dataset.category === category) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // Search functionality
+    document.getElementById("searchInput").addEventListener("input", function () {
+      let query = this.value.toLowerCase();
+      document.querySelectorAll(".movie-card").forEach(card => {
+        let title = card.querySelector(".movie-title").textContent.toLowerCase();
+        if (title.includes(query)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+
+    // Slider
+    let slides = document.querySelectorAll(".slide");
+    let current = 0;
+    function showSlide(index) {
+      slides[current].classList.remove("active");
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add("active");
+    }
+    document.getElementById("next").onclick = () => showSlide(current + 1);
+    document.getElementById("prev").onclick = () => showSlide(current - 1);
+    setInterval(() => showSlide(current + 1), 5000);
+
+    // FAQ toggle
+    document.querySelectorAll(".faq .container").forEach(container => {
+      container.addEventListener("click", () => {
+        let p = container.querySelector("p");
+        p.style.display = p.style.display === "block" ? "none" : "block";
+      });
+    });
+  </script>
+</body>
+
+</html>
